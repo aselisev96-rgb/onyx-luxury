@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onyx & Silk | Private Aesthetic Sanctuary</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    
+    <style>
+        :root {
+            --os-gold: #D4AF37;
+            --os-dark: #121212;
+            --os-card: #1A1A1A;
+            --os-silk: #F5F5DC;
+            --os-transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+
+        body {
+            background: var(--os-dark);
+            color: var(--os-silk);
+            font-family: 'Raleway', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Nav */
+        .os-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 25px 8%; background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(15px); position: fixed; width: 100%; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .os-logo { font-family: 'Playfair Display'; font-size: 1.6rem; color: var(--os-gold); cursor: pointer; letter-spacing: 4px; }
+        .os-menu button { background: none; border: none; color: var(--os-silk); margin-left: 25px; cursor: pointer; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; transition: var(--os-transition); }
+        .os-menu button:hover { color: var(--os-gold); }
+
+        /* Pages */
+        .os-page { display: none; padding: 160px 8% 80px; min-height: 100vh; animation: osFadeIn 0.8s ease; }
+        .os-page.active { display: flex; flex-direction: column; }
+
+        @keyframes osFadeIn { from { opacity: 0; filter: blur(8px); transform: scale(0.99); } to { opacity: 1; filter: blur(0); transform: scale(1); } }
+
+        /* Hero */
+        #home {
+            background: linear-gradient(-45deg, #121212, #1a1a1a, #0f0f0f, #121212);
+            background-size: 400% 400%; animation: gradientBG 15s ease infinite;
+            justify-content: center; align-items: center; text-align: center; perspective: 1000px;
+        }
+        .os-hero h1 { font-family: 'Playfair Display'; font-size: clamp(3rem, 8vw, 5rem); margin-bottom: 20px; transition: 0.1s ease-out; }
+        .os-hero p { font-size: 1rem; color: #888; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 40px; }
+
+        /* Buttons */
+        .os-btn {
+            padding: 18px 45px; border: 1px solid var(--os-gold); color: var(--os-gold);
+            text-decoration: none; text-transform: uppercase; letter-spacing: 3px;
+            font-size: 0.7rem; transition: var(--os-transition); background: transparent; cursor: pointer;
+            display: inline-block; text-align: center;
+        }
+        .os-btn:hover { background: var(--os-gold); color: var(--os-dark); box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); }
+
+        /* Services & Grid */
+        .os-services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .os-card { background: var(--os-card); padding: 50px 40px; border: 1px solid rgba(212, 175, 55, 0.05); transition: var(--os-transition); }
+        .os-card:hover { border-color: var(--os-gold); transform: translateY(-10px); }
+
+        .os-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
+        .os-img { height: 450px; background: #1a1a1a; overflow: hidden; }
+        .os-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: 1.2s; filter: grayscale(100%); }
+        .os-img:hover img { opacity: 1; filter: grayscale(0); transform: scale(1.1); }
+
+        /* Modal */
+        .os-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
+            display: none; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .os-modal-overlay.active { display: flex; }
+        .os-modal-content {
+            background: var(--os-card); padding: 50px; width: 90%; max-width: 500px;
+            border: 1px solid var(--os-gold); position: relative;
+        }
+        .os-close { position: absolute; top: 20px; right: 20px; color: var(--os-silk); font-size: 24px; cursor: pointer; }
+        .os-form input, .os-form select {
+            width: 100%; padding: 15px; background: transparent; border: 1px solid #333;
+            color: var(--os-silk); margin-bottom: 20px; font-family: 'Raleway';
+        }
+
+        footer { padding: 60px 8% 30px; border-top: 1px solid rgba(212,175,55,0.1); text-align: center; color: #444; font-size: 0.8rem; letter-spacing: 1px; }
+
+        @media (max-width: 768px) { .os-hero h1 { font-size: 2.8rem; } .os-nav { flex-direction: column; } .os-menu { margin-top: 15px; } }
+    </style>
+</head>
+<body>
+
+    <nav class="os-nav">
+        <div class="os-logo" onclick="showPage('home')">ONYX & SILK</div>
+        <div class="os-menu">
+            <button onclick="showPage('home')">Home</button>
+            <button onclick="showPage('services')">Services</button>
+            <button onclick="showPage('gallery')">Work</button>
+            <button onclick="showPage('contact')">Reserve</button>
+        </div>
+    </nav>
+
+    <!-- PAGE: HOME -->
+    <section id="home" class="os-page active">
+        <div class="os-hero">
+            <p>Private Sanctuary</p>
+            <h1 id="hero-title">Beyond Beauty</h1>
+            <button class="os-btn" onclick="showPage('services')">Explore Menu</button>
+        </div>
+    </section>
+
+    <!-- PAGE: SERVICES -->
+    <section id="services" class="os-page">
+        <h2 style="font-family: 'Playfair Display'; font-size: 3rem; margin-bottom: 50px; text-align: center;">Signature Menu</h2>
+        <div class="os-services-grid">
+            <div class="os-card">
+                <h3 style="color: var(--os-gold); font-family: 'Playfair Display';">Sculpted Nails</h3>
+                <p>Architectural precision and premium long-wear finish.</p>
+                <p style="margin-top: 20px; color: var(--os-gold);">$95+</p>
+            </div>
+            <div class="os-card">
+                <h3 style="color: var(--os-gold); font-family: 'Playfair Display';">Silk Therapy</h3>
+                <p>Deep skin rejuvenation and hand-massage ritual.</p>
+                <p style="margin-top: 20px; color: var(--os-gold);">$65+</p>
+            </div>
+            <div class="os-card">
+                <h3 style="color: var(--os-gold); font-family: 'Playfair Display';">Smart Pedi</h3>
+                <p>Elite foot care combining medical safety and spa comfort.</p>
+                <p style="margin-top: 20px; color: var(--os-gold);">$110+</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE: WORK (GALLERY) -->
+    <section id="gallery" class="os-page">
+        <h2 style="font-family: 'Playfair Display'; font-size: 3rem; margin-bottom: 50px; text-align: center;">The Portfolio</h2>
+        <div class="os-gallery">
+            <div class="os-img"><img src="https://images.unsplash.com"></div>
+            <div class="os-img"><img src="https://images.unsplash.com"></div>
+            <div class="os-img"><img src="https://images.unsplash.com"></div>
+        </div>
+    </section>
+
+    <!-- PAGE: RESERVE -->
+    <section id="contact" class="os-page">
+        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <p style="color: var(--os-gold); text-transform: uppercase; letter-spacing: 5px; margin-bottom: 20px;">Inquiries</p>
+            <h2 style="font-family: 'Playfair Display'; font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 30px;">Private Booking</h2>
+            <p style="color: #888; margin-bottom: 50px; font-size: 1.1rem;">To ensure an exclusive experience, we operate by appointment only. Please select your preferred method to secure your sanctuary time.</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+                <button class="os-btn" style="width: 320px;" onclick="openModal()">Online Request</button>
+                <a href="#" class="os-btn" style="width: 320px; border-color: #25D366; color: #25D366;">WhatsApp Direct</a>
+                <a href="#" class="os-btn" style="width: 320px; border-color: #fff; color: #fff;">Instagram Concierge</a>
+            </div>
+
+            <div style="margin-top: 60px; color: #555; font-size: 0.9rem;">
+                <p>Global City, Elite District, Suite 402</p>
+                <p>Mon - Sun: 10:00 AM — 09:00 PM</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="os-modal-overlay" id="bookingModal">
+        <div class="os-modal-content">
+            <span class="os-close" onclick="closeModal()">&times;</span>
+            <h2 style="font-family: 'Playfair Display'; color: var(--os-gold); margin-bottom: 20px;">Reservation</h2>
+            <form class="os-form" onsubmit="event.preventDefault(); alert('Request Received. Our concierge will contact you shortly.'); closeModal();">
+                <input type="text" placeholder="Full Name" required>
+                <input type="tel" placeholder="Phone Number" required>
+                <select><option>Select Service</option><option>Sculpted Nails</option><option>Silk Therapy</option><option>Smart Pedi</option></select>
+                <button type="submit" class="os-btn" style="width: 100%;">Confirm Interest</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>ONYX & SILK — © 2024 GLOBAL LUXURY AESTHETICS</footer>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.os-page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function openModal() { document.getElementById('bookingModal').classList.add('active'); }
+        function closeModal() { document.getElementById('bookingModal').classList.remove('active'); }
+        
+        document.addEventListener('mousemove', (e) => {
+            const title = document.getElementById('hero-title');
+            if (document.getElementById('home').classList.contains('active')) {
+                const x = (window.innerWidth / 2 - e.pageX) / 45;
+                const y = (window.innerHeight / 2 - e.pageY) / 45;
+                title.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+            }
+        });
+    </script>
+</body>
+</html>
